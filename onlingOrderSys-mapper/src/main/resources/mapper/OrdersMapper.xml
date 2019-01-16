@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huat.bs.dao.OrdersMapper">
+  <resultMap id="BaseResultMap" type="com.huat.bs.bean.Orders">
+    <id column="oid" jdbcType="VARCHAR" property="oid" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="totals" jdbcType="DECIMAL" property="totals" />
+    <result column="uid" jdbcType="VARCHAR" property="uid" />
+    <result column="payState" jdbcType="INTEGER" property="paystate" />
+    <result column="oState" jdbcType="INTEGER" property="ostate" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="userPhone" jdbcType="VARCHAR" property="userphone" />
+    <result column="deliverPersonId" jdbcType="VARCHAR" property="deliverpersonid" />
+    <result column="purchaser" jdbcType="VARCHAR" property="purchaser" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.huat.bs.bean.Orders">
+    <result column="notes" jdbcType="LONGVARCHAR" property="notes" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    oid, createtime, totals, uid, payState, oState, address, userPhone, deliverPersonId, 
+    purchaser
+  </sql>
+  <sql id="Blob_Column_List">
+    notes
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.huat.bs.bean.OrdersExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from orders
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.huat.bs.bean.OrdersExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from orders
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from orders
+    where oid = #{oid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from orders
+    where oid = #{oid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.huat.bs.bean.OrdersExample">
+    delete from orders
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.huat.bs.bean.Orders">
+    insert into orders (oid, createtime, totals, 
+      uid, payState, oState, 
+      address, userPhone, deliverPersonId, 
+      purchaser, notes)
+    values (#{oid,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, #{totals,jdbcType=DECIMAL}, 
+      #{uid,jdbcType=VARCHAR}, #{paystate,jdbcType=INTEGER}, #{ostate,jdbcType=INTEGER}, 
+      #{address,jdbcType=VARCHAR}, #{userphone,jdbcType=VARCHAR}, #{deliverpersonid,jdbcType=VARCHAR}, 
+      #{purchaser,jdbcType=VARCHAR}, #{notes,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.huat.bs.bean.Orders">
+    insert into orders
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="oid != null">
+        oid,
+      </if>
+      <if test="createtime != null">
+        createtime,
+      </if>
+      <if test="totals != null">
+        totals,
+      </if>
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="paystate != null">
+        payState,
+      </if>
+      <if test="ostate != null">
+        oState,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="userphone != null">
+        userPhone,
+      </if>
+      <if test="deliverpersonid != null">
+        deliverPersonId,
+      </if>
+      <if test="purchaser != null">
+        purchaser,
+      </if>
+      <if test="notes != null">
+        notes,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="oid != null">
+        #{oid,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="totals != null">
+        #{totals,jdbcType=DECIMAL},
+      </if>
+      <if test="uid != null">
+        #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="paystate != null">
+        #{paystate,jdbcType=INTEGER},
+      </if>
+      <if test="ostate != null">
+        #{ostate,jdbcType=INTEGER},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="userphone != null">
+        #{userphone,jdbcType=VARCHAR},
+      </if>
+      <if test="deliverpersonid != null">
+        #{deliverpersonid,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaser != null">
+        #{purchaser,jdbcType=VARCHAR},
+      </if>
+      <if test="notes != null">
+        #{notes,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.huat.bs.bean.OrdersExample" resultType="java.lang.Long">
+    select count(*) from orders
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update orders
+    <set>
+      <if test="record.oid != null">
+        oid = #{record.oid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null">
+        createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.totals != null">
+        totals = #{record.totals,jdbcType=DECIMAL},
+      </if>
+      <if test="record.uid != null">
+        uid = #{record.uid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paystate != null">
+        payState = #{record.paystate,jdbcType=INTEGER},
+      </if>
+      <if test="record.ostate != null">
+        oState = #{record.ostate,jdbcType=INTEGER},
+      </if>
+      <if test="record.address != null">
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userphone != null">
+        userPhone = #{record.userphone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deliverpersonid != null">
+        deliverPersonId = #{record.deliverpersonid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.purchaser != null">
+        purchaser = #{record.purchaser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.notes != null">
+        notes = #{record.notes,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update orders
+    set oid = #{record.oid,jdbcType=VARCHAR},
+      createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      totals = #{record.totals,jdbcType=DECIMAL},
+      uid = #{record.uid,jdbcType=VARCHAR},
+      payState = #{record.paystate,jdbcType=INTEGER},
+      oState = #{record.ostate,jdbcType=INTEGER},
+      address = #{record.address,jdbcType=VARCHAR},
+      userPhone = #{record.userphone,jdbcType=VARCHAR},
+      deliverPersonId = #{record.deliverpersonid,jdbcType=VARCHAR},
+      purchaser = #{record.purchaser,jdbcType=VARCHAR},
+      notes = #{record.notes,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update orders
+    set oid = #{record.oid,jdbcType=VARCHAR},
+      createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      totals = #{record.totals,jdbcType=DECIMAL},
+      uid = #{record.uid,jdbcType=VARCHAR},
+      payState = #{record.paystate,jdbcType=INTEGER},
+      oState = #{record.ostate,jdbcType=INTEGER},
+      address = #{record.address,jdbcType=VARCHAR},
+      userPhone = #{record.userphone,jdbcType=VARCHAR},
+      deliverPersonId = #{record.deliverpersonid,jdbcType=VARCHAR},
+      purchaser = #{record.purchaser,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.huat.bs.bean.Orders">
+    update orders
+    <set>
+      <if test="createtime != null">
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="totals != null">
+        totals = #{totals,jdbcType=DECIMAL},
+      </if>
+      <if test="uid != null">
+        uid = #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="paystate != null">
+        payState = #{paystate,jdbcType=INTEGER},
+      </if>
+      <if test="ostate != null">
+        oState = #{ostate,jdbcType=INTEGER},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="userphone != null">
+        userPhone = #{userphone,jdbcType=VARCHAR},
+      </if>
+      <if test="deliverpersonid != null">
+        deliverPersonId = #{deliverpersonid,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaser != null">
+        purchaser = #{purchaser,jdbcType=VARCHAR},
+      </if>
+      <if test="notes != null">
+        notes = #{notes,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where oid = #{oid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.huat.bs.bean.Orders">
+    update orders
+    set createtime = #{createtime,jdbcType=TIMESTAMP},
+      totals = #{totals,jdbcType=DECIMAL},
+      uid = #{uid,jdbcType=VARCHAR},
+      payState = #{paystate,jdbcType=INTEGER},
+      oState = #{ostate,jdbcType=INTEGER},
+      address = #{address,jdbcType=VARCHAR},
+      userPhone = #{userphone,jdbcType=VARCHAR},
+      deliverPersonId = #{deliverpersonid,jdbcType=VARCHAR},
+      purchaser = #{purchaser,jdbcType=VARCHAR},
+      notes = #{notes,jdbcType=LONGVARCHAR}
+    where oid = #{oid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.huat.bs.bean.Orders">
+    update orders
+    set createtime = #{createtime,jdbcType=TIMESTAMP},
+      totals = #{totals,jdbcType=DECIMAL},
+      uid = #{uid,jdbcType=VARCHAR},
+      payState = #{paystate,jdbcType=INTEGER},
+      oState = #{ostate,jdbcType=INTEGER},
+      address = #{address,jdbcType=VARCHAR},
+      userPhone = #{userphone,jdbcType=VARCHAR},
+      deliverPersonId = #{deliverpersonid,jdbcType=VARCHAR},
+      purchaser = #{purchaser,jdbcType=VARCHAR}
+    where oid = #{oid,jdbcType=VARCHAR}
+  </update>
+</mapper>

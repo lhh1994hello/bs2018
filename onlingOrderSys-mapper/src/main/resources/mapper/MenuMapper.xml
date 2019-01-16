@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huat.bs.dao.MenuMapper">
+  <resultMap id="BaseResultMap" type="com.huat.bs.bean.Menu">
+    <id column="mid" jdbcType="VARCHAR" property="mid" />
+    <result column="mname" jdbcType="VARCHAR" property="mname" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="salecount" jdbcType="INTEGER" property="salecount" />
+    <result column="mc_id" jdbcType="INTEGER" property="mcId" />
+    <result column="image" jdbcType="VARCHAR" property="image" />
+    <result column="introduce" jdbcType="VARCHAR" property="introduce" />
+    <result column="mstate" jdbcType="INTEGER" property="mstate" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="rateStar" jdbcType="INTEGER" property="ratestar" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    mid, mname, price, salecount, mc_id, image, introduce, mstate, createtime, rateStar
+  </sql>
+  <select id="selectByExample" parameterType="com.huat.bs.bean.MenuExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from menu
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from menu
+    where mid = #{mid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from menu
+    where mid = #{mid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.huat.bs.bean.MenuExample">
+    delete from menu
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.huat.bs.bean.Menu">
+    insert into menu (mid, mname, price, 
+      salecount, mc_id, image, 
+      introduce, mstate, createtime, 
+      rateStar)
+    values (#{mid,jdbcType=VARCHAR}, #{mname,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, 
+      #{salecount,jdbcType=INTEGER}, #{mcId,jdbcType=INTEGER}, #{image,jdbcType=VARCHAR}, 
+      #{introduce,jdbcType=VARCHAR}, #{mstate,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{ratestar,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.huat.bs.bean.Menu">
+    insert into menu
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="mid != null">
+        mid,
+      </if>
+      <if test="mname != null">
+        mname,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="salecount != null">
+        salecount,
+      </if>
+      <if test="mcId != null">
+        mc_id,
+      </if>
+      <if test="image != null">
+        image,
+      </if>
+      <if test="introduce != null">
+        introduce,
+      </if>
+      <if test="mstate != null">
+        mstate,
+      </if>
+      <if test="createtime != null">
+        createtime,
+      </if>
+      <if test="ratestar != null">
+        rateStar,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="mid != null">
+        #{mid,jdbcType=VARCHAR},
+      </if>
+      <if test="mname != null">
+        #{mname,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="salecount != null">
+        #{salecount,jdbcType=INTEGER},
+      </if>
+      <if test="mcId != null">
+        #{mcId,jdbcType=INTEGER},
+      </if>
+      <if test="image != null">
+        #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="introduce != null">
+        #{introduce,jdbcType=VARCHAR},
+      </if>
+      <if test="mstate != null">
+        #{mstate,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ratestar != null">
+        #{ratestar,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.huat.bs.bean.MenuExample" resultType="java.lang.Long">
+    select count(*) from menu
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update menu
+    <set>
+      <if test="record.mid != null">
+        mid = #{record.mid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mname != null">
+        mname = #{record.mname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.price != null">
+        price = #{record.price,jdbcType=DECIMAL},
+      </if>
+      <if test="record.salecount != null">
+        salecount = #{record.salecount,jdbcType=INTEGER},
+      </if>
+      <if test="record.mcId != null">
+        mc_id = #{record.mcId,jdbcType=INTEGER},
+      </if>
+      <if test="record.image != null">
+        image = #{record.image,jdbcType=VARCHAR},
+      </if>
+      <if test="record.introduce != null">
+        introduce = #{record.introduce,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mstate != null">
+        mstate = #{record.mstate,jdbcType=INTEGER},
+      </if>
+      <if test="record.createtime != null">
+        createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.ratestar != null">
+        rateStar = #{record.ratestar,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update menu
+    set mid = #{record.mid,jdbcType=VARCHAR},
+      mname = #{record.mname,jdbcType=VARCHAR},
+      price = #{record.price,jdbcType=DECIMAL},
+      salecount = #{record.salecount,jdbcType=INTEGER},
+      mc_id = #{record.mcId,jdbcType=INTEGER},
+      image = #{record.image,jdbcType=VARCHAR},
+      introduce = #{record.introduce,jdbcType=VARCHAR},
+      mstate = #{record.mstate,jdbcType=INTEGER},
+      createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      rateStar = #{record.ratestar,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.huat.bs.bean.Menu">
+    update menu
+    <set>
+      <if test="mname != null">
+        mname = #{mname,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="salecount != null">
+        salecount = #{salecount,jdbcType=INTEGER},
+      </if>
+      <if test="mcId != null">
+        mc_id = #{mcId,jdbcType=INTEGER},
+      </if>
+      <if test="image != null">
+        image = #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="introduce != null">
+        introduce = #{introduce,jdbcType=VARCHAR},
+      </if>
+      <if test="mstate != null">
+        mstate = #{mstate,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null">
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ratestar != null">
+        rateStar = #{ratestar,jdbcType=INTEGER},
+      </if>
+    </set>
+    where mid = #{mid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.huat.bs.bean.Menu">
+    update menu
+    set mname = #{mname,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DECIMAL},
+      salecount = #{salecount,jdbcType=INTEGER},
+      mc_id = #{mcId,jdbcType=INTEGER},
+      image = #{image,jdbcType=VARCHAR},
+      introduce = #{introduce,jdbcType=VARCHAR},
+      mstate = #{mstate,jdbcType=INTEGER},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      rateStar = #{ratestar,jdbcType=INTEGER}
+    where mid = #{mid,jdbcType=VARCHAR}
+  </update>
+</mapper>

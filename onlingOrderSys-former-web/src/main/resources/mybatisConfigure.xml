@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<properties>
+		<property name="dialect" value="mysql" />
+	</properties>
+	<settings>
+		<!-- 驼峰命名规则 -->
+		<setting name="mapUnderscoreToCamelCase" value="true" />
+		<!-- sql -->
+		<setting name="logImpl" value="LOG4J" /> 
+		<!-- <setting name="logPrefix" value="dao."/> -->
+		<!-- 开启二级缓存 -->
+		<setting name="cacheEnabled" value="true"/>
+		<!--下面俩默认就是这些值可以不配  默认就是这些-->
+        <setting name="lazyLoadingEnabled" value="false"/>
+        <setting name="aggressiveLazyLoading" value="true"/>
+	</settings>
+
+	<!-- 类型别名 -->
+	<typeAliases>
+		<package name="com.huat.bs.bean" />
+	</typeAliases>
+	<!-- 注册分页插件 -->
+
+	<plugins>
+		<plugin interceptor="com.github.pagehelper.PageInterceptor">
+			<!-- 该参数，使分页合理化，当页码是负数时查询第一页，当页码大于总页数时显示最后一页。默认是false -->
+			<property name="reasonable" value="true" />
+		</plugin>
+		<!--  -->
+		<plugin interceptor="com.huat.bs.util.SqlCostInterceptor">
+		
+		</plugin>
+	</plugins>
+</configuration>

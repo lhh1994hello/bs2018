@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huat.bs.dao.EvaluationMapper">
+  <resultMap id="BaseResultMap" type="com.huat.bs.bean.Evaluation">
+    <id column="eid" jdbcType="VARCHAR" property="eid" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="contexts" jdbcType="VARCHAR" property="contexts" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="uid" jdbcType="VARCHAR" property="uid" />
+    <result column="mid" jdbcType="VARCHAR" property="mid" />
+    <result column="estate" jdbcType="INTEGER" property="estate" />
+    <result column="startNum" jdbcType="INTEGER" property="startnum" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    eid, title, contexts, createtime, uid, mid, estate, startNum
+  </sql>
+  <select id="selectByExample" parameterType="com.huat.bs.bean.EvaluationExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from evaluation
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from evaluation
+    where eid = #{eid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from evaluation
+    where eid = #{eid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.huat.bs.bean.EvaluationExample">
+    delete from evaluation
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.huat.bs.bean.Evaluation">
+    insert into evaluation (eid, title, contexts, 
+      createtime, uid, mid, 
+      estate, startNum)
+    values (#{eid,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{contexts,jdbcType=VARCHAR}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{uid,jdbcType=VARCHAR}, #{mid,jdbcType=VARCHAR}, 
+      #{estate,jdbcType=INTEGER}, #{startnum,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.huat.bs.bean.Evaluation">
+    insert into evaluation
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="eid != null">
+        eid,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="contexts != null">
+        contexts,
+      </if>
+      <if test="createtime != null">
+        createtime,
+      </if>
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="mid != null">
+        mid,
+      </if>
+      <if test="estate != null">
+        estate,
+      </if>
+      <if test="startnum != null">
+        startNum,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="eid != null">
+        #{eid,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="contexts != null">
+        #{contexts,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uid != null">
+        #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="mid != null">
+        #{mid,jdbcType=VARCHAR},
+      </if>
+      <if test="estate != null">
+        #{estate,jdbcType=INTEGER},
+      </if>
+      <if test="startnum != null">
+        #{startnum,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.huat.bs.bean.EvaluationExample" resultType="java.lang.Long">
+    select count(*) from evaluation
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update evaluation
+    <set>
+      <if test="record.eid != null">
+        eid = #{record.eid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.title != null">
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contexts != null">
+        contexts = #{record.contexts,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null">
+        createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.uid != null">
+        uid = #{record.uid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mid != null">
+        mid = #{record.mid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.estate != null">
+        estate = #{record.estate,jdbcType=INTEGER},
+      </if>
+      <if test="record.startnum != null">
+        startNum = #{record.startnum,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update evaluation
+    set eid = #{record.eid,jdbcType=VARCHAR},
+      title = #{record.title,jdbcType=VARCHAR},
+      contexts = #{record.contexts,jdbcType=VARCHAR},
+      createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      uid = #{record.uid,jdbcType=VARCHAR},
+      mid = #{record.mid,jdbcType=VARCHAR},
+      estate = #{record.estate,jdbcType=INTEGER},
+      startNum = #{record.startnum,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.huat.bs.bean.Evaluation">
+    update evaluation
+    <set>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="contexts != null">
+        contexts = #{contexts,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uid != null">
+        uid = #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="mid != null">
+        mid = #{mid,jdbcType=VARCHAR},
+      </if>
+      <if test="estate != null">
+        estate = #{estate,jdbcType=INTEGER},
+      </if>
+      <if test="startnum != null">
+        startNum = #{startnum,jdbcType=INTEGER},
+      </if>
+    </set>
+    where eid = #{eid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.huat.bs.bean.Evaluation">
+    update evaluation
+    set title = #{title,jdbcType=VARCHAR},
+      contexts = #{contexts,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      uid = #{uid,jdbcType=VARCHAR},
+      mid = #{mid,jdbcType=VARCHAR},
+      estate = #{estate,jdbcType=INTEGER},
+      startNum = #{startnum,jdbcType=INTEGER}
+    where eid = #{eid,jdbcType=VARCHAR}
+  </update>
+</mapper>

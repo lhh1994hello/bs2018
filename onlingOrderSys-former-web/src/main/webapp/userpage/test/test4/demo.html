@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+
+<script type="text/javascript">
+
+
+		function findMyOrderList(){
+			$.ajax({
+				url:"${APP_PATH}/getMyOrdersWithAjax",
+				data:{"pn":currentPage},
+				type:"POST",
+				success:function(result){
+					var code=result.code;
+					if(code==100){
+		 				fillContextArea(result);
+					}else if(code==200){
+						var msg=result.extend.msg;
+						alert("提示:"+msg);
+					}	
+				}
+			});
+		}
+
+</script>
+
+</body>
+</html>

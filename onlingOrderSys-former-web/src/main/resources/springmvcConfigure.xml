@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" 
+	xmlns:task="http://www.springframework.org/schema/task"
+	 xmlns:websocket="http://www.springframework.org/schema/websocket" 
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc 
+		http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/task
+		
+		http://www.springframework.org/schema/websocket 
+		http://www.springframework.org/schema/websocket/spring-websocket.xsd
+		
+		http://www.springframework.org/schema/task/spring-task-3.2.xsd">
+	<!-- 在springmvc配置文件中也指定一下 那些配置文件的位置， 要不然 @Value在Controller层不能使用 -->
+	<context:property-placeholder location="classpath:*.properties" />
+	<!-- 设置定时任务 -->
+	<!-- <task:annotation-driven scheduler="myScheduler"/>
+	<task:scheduler id="myScheduler" pool-size="5"/> --> 
+	<!-- 和spring配置文件中的配置很像 -->
+	<context:component-scan base-package="com.huat"
+		use-default-filters="false">
+		<!-- 只扫描控制器 :带有Controller注解的就是 -->
+		<context:include-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
+	<!-- 配置视图解析器， -->
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<!-- 配置前缀和后缀 -->
+		<!-- <property name="prefix" value="/WEB-INF/views/"></property> -->
+		<property name="prefix" value="/"></property>
+		<property name="suffix" value=".jsp"></property>
+	</bean>
+	<!-- 文件上传 -->
+	<!-- 配置文件上传，如果没有使用文件上传可以不用配置，当然如果不配，那么配置文件中也不必引入上传组件包 -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- 默认编码 -->
+		<property name="defaultEncoding" value="utf-8" />
+		<!-- 文件大小最大值 -->
+		<property name="maxUploadSize" value="10485760000" />
+		<!-- 内存中的最大值 -->
+		<property name="maxInMemorySize" value="40960" />
+	</bean>
+	<!--两个标准配置 -->
+	<!-- 1.将springmvc不能处理的请求交给tomcat -->
+	<mvc:default-servlet-handler></mvc:default-servlet-handler>
+	<!-- 2. 能支持springmvc更高级的一些功能，JSP303,快捷的AJAX。...映射动态请求 -->
+	<mvc:annotation-driven></mvc:annotation-driven>
+	<!-- -->
+	<!-- <mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<bean class="com.huat.bs.interceptor.LoginInterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors> -->
+</beans>

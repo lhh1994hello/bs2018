@@ -1,0 +1,8 @@
+/target/
+.settings/
+target/
+.project
+.classpath
+.MF
+/META-INF/
+/src/main/webapp/WEB-INF/classes
